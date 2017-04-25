@@ -8,11 +8,24 @@
             <description>XML builder component</description>
             <auto-deploy category-id="HTW" major-version="1" minor-version="0" />
             <implementation-class>de.htwb.lc.XMLBuilder</implementation-class>
-            <small-icon>icons/list16.png</small-icon>
-            <large-icon>icons/list48.png</large-icon>
+            <small-icon>icons/xml16.png</small-icon>
+            <large-icon>icons/xml48.png</large-icon>
             <operations>
                 <operation name="append">
                     <hint>append element to document</hint>
+                    <input-parameter name="document" title="Document" type="org.w3c.dom.Document">
+                        <supported-expr-types>Literal,XPath,Template,Variable</supported-expr-types>
+                    </input-parameter>
+                    <input-parameter name="element" title="Element" type="org.w3c.dom.Document">
+                        <supported-expr-types>Literal,XPath,Template,Variable</supported-expr-types>
+                    </input-parameter>
+                    <output-parameter name="result" title="Result" type="org.w3c.dom.Document" />
+                    <faults>
+                        <fault name="Exception" type="java.lang.Exception" />
+                    </faults>
+                </operation>
+                <operation name="prepend">
+                    <hint>prepend element in document</hint>
                     <input-parameter name="document" title="Document" type="org.w3c.dom.Document">
                         <supported-expr-types>Literal,XPath,Template,Variable</supported-expr-types>
                     </input-parameter>

@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class XMLBuilderTest {
 
     @Test
-    public void testAppendOne() throws Exception {
+    public void testAppend() throws Exception {
 
         // create builder
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -44,10 +44,50 @@ public class XMLBuilderTest {
         element.appendChild(third);
 
         // call appender
-        Document append = new XMLBuilder().append(document, element);
+        Document actual = new XMLBuilder().append(document, element);
 
         // assert entries
-        NodeList nodes = append.getDocumentElement().getChildNodes();
+        NodeList nodes = actual.getDocumentElement().getChildNodes();
+        assertEquals(3, nodes.getLength());
+        assertEquals(first.getTextContent(), nodes.item(0).getTextContent());
+        assertEquals(third.getTextContent(), nodes.item(2).getTextContent());
+    }
+
+    @Test
+    public void testPrepend() throws Exception {
+
+        // create builder
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+
+        // build document
+        Document document = builder.newDocument();
+        document.setXmlStandalone(true);
+
+        Element root = document.createElement("list");
+        document.appendChild(root);
+
+        Element second = document.createElement("entry");
+        second.setTextContent("second");
+        root.appendChild(second);
+
+        Element third = document.createElement("entry");
+        third.setTextContent("third");
+        root.appendChild(third);
+
+        // create element to prepend
+        Document element = builder.newDocument();
+        element.setXmlStandalone(true);
+
+        Element first = element.createElement("entry");
+        first.setTextContent("first");
+        element.appendChild(first);
+
+        // call prepend
+        Document actual = new XMLBuilder().prepend(document, element);
+
+        // assert entries
+        NodeList nodes = actual.getDocumentElement().getChildNodes();
         assertEquals(3, nodes.getLength());
         assertEquals(first.getTextContent(), nodes.item(0).getTextContent());
         assertEquals(third.getTextContent(), nodes.item(2).getTextContent());
